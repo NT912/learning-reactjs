@@ -1,35 +1,86 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import "./App.css";
 
-function App() {
-  const [count, setCount] = useState(0)
-
+function SetName(props) {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div>
+      <input
+        type="text"
+        value={props.name}
+        onChange={(event) => props.setName(event.target.value)}
+        placeholder="Nhập tên của bạn..."
+      />
+
+      <p>Gõ vào ô trên để thấy tên thay đổi tức thì!</p>
+    </div>
+  );
 }
 
-export default App
+function LikeButton() {
+  const [like, setLike] = useState(0);
+  return (
+    <div>
+      <button
+        onClick={() => {
+          const newLike = like + 1;
+          setLike(newLike);
+          if (newLike > 10) {
+            alert("WOW!!!");
+          }
+        }}
+      >
+        👍 Thích: {like}
+      </button>
+      <button
+        onClick={() => {
+          setLike(0);
+          alert("Đã xóa hết lượt thích!");
+        }}
+      >
+        Reset
+      </button>
+    </div>
+  );
+}
+
+function UserInfo(props) {
+  return (
+    <div>
+      <span>👤</span>
+      <strong>{props.userName}</strong>
+    </div>
+  );
+}
+
+function PostContent(props) {
+  return (
+    <div>
+      <p>{props.content}</p>
+    </div>
+  );
+}
+
+function App() {
+  const [name, setName] = useState("Nhật Trường");
+
+  const friends = ["Nguyen Van A", "Le Thi B", "Tran Van C"];
+
+  return (
+    <div>
+      <SetName name={name} setName={setName} />
+      <UserInfo userName={name} />
+
+      <hr />
+      <h3>Danh sách bạn bè:</h3>
+      {friends.map((fName) => (
+        <UserInfo key={fName} userName={fName} />
+      ))}
+
+      <hr />
+      <PostContent content="Tôi đang học cách hiển thị danh sách trong React:" />
+      <LikeButton />
+    </div>
+  );
+}
+
+export default App;
