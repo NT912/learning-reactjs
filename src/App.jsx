@@ -62,23 +62,25 @@ function PostContent(props) {
 
 function App() {
   const [name, setName] = useState("Nhật Trường");
+  const [friends, setFriends] = useState(["Nguyen Van A", "Le Thi B"]);
 
-  const friends = ["Nguyen Van A", "Le Thi B", "Tran Van C"];
+  const handleAddFriend = () => {
+    setFriends([...friends, name]);
+    setName("");
+  };
 
   return (
     <div>
       <SetName name={name} setName={setName} />
+      <button onClick={handleAddFriend}>Thêm bạn</button>
+      
       <UserInfo userName={name} />
 
       <hr />
       <h3>Danh sách bạn bè:</h3>
-      {friends.map((fName) => (
-        <UserInfo key={fName} userName={fName} />
+      {friends.map((fName, index) => (
+        <UserInfo key={index} userName={fName} />
       ))}
-
-      <hr />
-      <PostContent content="Tôi đang học cách hiển thị danh sách trong React:" />
-      <LikeButton />
     </div>
   );
 }
